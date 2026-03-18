@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        #weather { margin-top: 20px; padding: 20px; background: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+        <input type="text" id="cityInput" placeholder="Enter city name" />
+        <button id="searchButton">Search</button>
+
+        <div id="weather">
+            <h2>Current Weather</h2>
+            <p id="currentWeather"></p>
+            <h2>Forecast</h2>
+            <p id="forecast"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const city = document.getElementById('cityInput').value;
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=YOUR_API_KEY&units=metric`)
+                .then(response => response.json())
+                .then(data => {
+                    const currentWeather = `Temperature: ${data.main.temp} °C, Weather: ${data.weather[0].description}`;
+                    document.getElementById('currentWeather').innerText = currentWeather;
+                    return fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=YOUR_API_KEY&units=metric`);
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const forecast = data.list.map(item => `Date: ${item.dt_txt}, Temp: ${item.main.temp} °C, Weather: ${item.weather[0].description}`).join('\n');
+                    document.getElementById('forecast').innerText = forecast;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('currentWeather').innerText = 'Weather data not available.';
+                });
+        });
+    </script>
+</body>
+</html>
