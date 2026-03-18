@@ -1,0 +1,42 @@
+.weather-dashboard {
+    background: linear-gradient(to bottom right, #00aaff, #0044cc);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.weather-details {
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: 90%;
+        margin: 10px;
+    }
+}
+
+.animation {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
